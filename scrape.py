@@ -8,8 +8,9 @@ from utils import get_match_times, is_valid_post
 options = {
     # "progress": True,
     "comments": True,
-    "allow_extra_requests": True,
-    "reactors": True
+    "allow_extra_requests": False,
+    "reactors": True,
+    "posts_per_page": 200,
 }
 
 def main(args):
@@ -38,9 +39,11 @@ def main(args):
             print('Search completed')
             break
 
+        print(f'Reading post from {post["time"]}')
+
         if post['time'] > max_time:
             continue
-
+              
         if is_valid_post(post, match_times):
             file_dir = os.path.join(team_dir, post["post_id"] + '.json')
             with open(file_dir, 'w') as fp:
