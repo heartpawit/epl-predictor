@@ -34,7 +34,7 @@ def main(args):
         os.makedirs(team_dir)
 
     print('===> Start scraping')
-    for post in get_posts(page, cookies='facebook.com_cookies.txt', page=None, options=options):
+    for post in get_posts(page, pages=50, timeout=300, options=options):
         if post['time'] < min_time:
             print('Search completed')
             break
