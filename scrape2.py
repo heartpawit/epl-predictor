@@ -6,7 +6,7 @@ import json
 options = {
     # "progress": True,
     "comments": True,
-    "allow_extra_requests": True,
+    "allow_extra_requests": False,
     "reactors": True,
     # "posts_per_page": 200,
 }
@@ -24,8 +24,8 @@ def main():
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
         
-        for post in get_posts(post_urls=postIDs, timeout=300, options=options):
-            file_dir = os.path.join(save_dir, post["post_id"] + '.json')
+        for post in get_posts(post_urls=postIDs, cookies='facebook.com_cookies.txt', timeout=300, options=options):
+            file_dir = os.path.join(save_dir, post["original_request_url"] + '.json')
             with open(file_dir, 'w') as fp:
                 json.dump(post, fp, default=str, indent=4)
                 print(f'{post["post_id"]}.json saved')
