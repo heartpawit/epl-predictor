@@ -5,9 +5,9 @@ import json
 
 options = {
     # "progress": True,
-    "comments": True,
+    "comments": 100,
     "allow_extra_requests": False,
-    "reactors": True,
+    # "reactors": True,
     # "posts_per_page": 200,
 }
 
@@ -28,7 +28,7 @@ def main():
             file_dir = os.path.join(save_dir, post["original_request_url"] + '.json')
             with open(file_dir, 'w') as fp:
                 json.dump(post, fp, default=str, indent=4)
-                print(f'{post["post_id"]}.json saved')
+                print(f'{post["original_request_url"]}.json saved')
     
     
 if __name__ == "__main__":
