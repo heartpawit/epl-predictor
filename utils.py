@@ -18,16 +18,25 @@ def is_valid_post(post, match_times):
             return True
     return False
 
-def generate_dataset(file, merge=False):
+def generate_dataset(file, mode='train'):
     comments = pd.read_csv(file, encoding='utf-8')
-
-    if merge:
-        return comments[["Comment", "Result"]]
-
-    else:
-        win = comments[comments["Result"] > 0][["Comment", "Result"]].reset_index(drop=True)
-        draw = comments[comments["Result"] == 0][["Comment", "Result"]].reset_index(drop=True)
-        lose = comments[comments["Result"] < 0][["Comment", "Result"]].reset_index(drop=True)
+    
+    if mode == 'single_eval':
+        matches = comments.groupby(['Match_ID', 'Comment_Team'])
+        return [matches.get_group(x) for x in matches.groups]
+    
+    elif mode == 'double_eval':
+        match_ids = comments.groupby(['Match_ID'])
+        return_list = []
+        for id in match_ids.groups:
+            df = match_ids.get_group(id)
+            return_list.append((df[df['Comment_Team'] == 'Home'], df[df['Comment_Team'] == 'Away']))
+        return return_list
+    
+    elif mode == 'train':
+        win = comments[comments["Result"] > 0].reset_index(drop=True)
+        draw = comments[comments["Result"] == 0].reset_index(drop=True)
+        lose = comments[comments["Result"] < 0].reset_index(drop=True)
         return win, draw, lose
 
 def calculate_similarity(X, Y):
