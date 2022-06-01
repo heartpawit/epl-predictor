@@ -12,9 +12,9 @@ def main():
     
     with open('train.csv', mode='w', newline='', encoding='utf-8') as train_csv, open('test.csv', mode='w', newline='', encoding='utf-8') as test_csv:
         train_writer = csv.writer(train_csv)
-        train_writer.writerow(['Comment', 'Match_ID', 'Home_Team', 'Away_Team', 'Comment_Team', 'Result'])
+        train_writer.writerow(['Comment', 'Match_ID', 'Home_Team', 'Away_Team', 'Result'])
         test_writer = csv.writer(test_csv)
-        test_writer.writerow(['Comment', 'Match_ID', 'Home_Team', 'Away_Team', 'Comment_Team', 'Result'])
+        test_writer.writerow(['Comment', 'Match_ID', 'Home_Team', 'Away_Team', 'Result'])
         
         with open('epl_fixtures-post_ids.csv', mode='r') as fixture_csv:
             fixture_reader = csv.DictReader(fixture_csv)
