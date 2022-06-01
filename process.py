@@ -47,7 +47,7 @@ def main():
                                    match['Away'],
                                     'Away',
                                    int(result[1]) - int(result[0])]
-                            if match['Match Number'] in test_match_ids:
+                            if int(match['Match Number']) in test_match_ids:
                                 test_writer.writerow(row)
                             else:
                                 train_writer.writerow(row)
