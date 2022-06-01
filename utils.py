@@ -18,8 +18,23 @@ def is_valid_post(post, match_times):
             return True
     return False
 
+def generate_dataset(file, merge=False):
+    comments = pd.read_csv(file, encoding='utf-8')
+
+    if merge:
+        return comments
+
+    else:
+        win = comments[comments["Result"] > 0][["Comment", "Result"]].reset_index(drop=True)
+        draw = comments[comments["Result"] == 0][["Comment", "Result"]].reset_index(drop=True)
+        lose = comments[comments["Result"] < 0][["Comment", "Result"]].reset_index(drop=True)
+        return win, draw, lose
+
+def calculate_similarity(X, Y):
+    return cosine_similarity(X, Y)
+
 def tf_idf(comments):
-    comments = [comment['comment'] for comment in comments]
+    comments = comments["Comment"].to_list()
     vectorizer = TfidfVectorizer(tokenizer=word_tokenize, stop_words='english', lowercase=False)
     X = vectorizer.fit_transform(comments)
     return vectorizer, X
