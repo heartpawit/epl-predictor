@@ -22,7 +22,7 @@ def generate_dataset(file, merge=False):
     comments = pd.read_csv(file, encoding='utf-8')
 
     if merge:
-        return comments
+        return comments[["Comment", "Result"]]
 
     else:
         win = comments[comments["Result"] > 0][["Comment", "Result"]].reset_index(drop=True)
