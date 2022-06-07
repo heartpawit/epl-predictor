@@ -2,7 +2,9 @@ import pandas as pd
 from datetime import datetime
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
-from nltk import word_tokenize
+from nltk import word_tokenize, FreqDist, bigrams
+from nltk.corpus import stopwords
+import re
 
 def get_match_times(team):
     fixtures = pd.read_csv('epl_fixtures.csv')
@@ -21,11 +23,11 @@ def is_valid_post(post, match_times):
 def generate_dataset(file, mode='train'):
     comments = pd.read_csv(file, encoding='utf-8')
     
-    if mode == 'single_eval':
+    if mode == 'single':
         matches = comments.groupby(['Match_ID', 'Comment_Team'])
         return [matches.get_group(x) for x in matches.groups]
     
-    elif mode == 'double_eval':
+    elif mode == 'double':
         match_ids = comments.groupby(['Match_ID'])
         return_list = []
         for id in match_ids.groups:
@@ -47,3 +49,15 @@ def tf_idf(comments):
     vectorizer = TfidfVectorizer(tokenizer=word_tokenize, stop_words='english', lowercase=False)
     X = vectorizer.fit_transform(comments)
     return vectorizer, X
+
+def create_freqdist(sents, mode='unigram'):
+    stopws = stopwords.words('english')
+    tokens = [token.lower() for comment in sents
+              for token in word_tokenize(comment)
+              if token not in stopws
+              and not re.fullmatch('\W+', token)]
+    if mode == 'unigram':    
+        return FreqDist(tokens)
+    elif mode == 'bigram':
+        bg = bigrams(tokens)
+        return FreqDist(bg)
