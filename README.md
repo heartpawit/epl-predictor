@@ -8,7 +8,7 @@ Check our [paper](#).
 
 ## Introduction
 
-We propose a novel approach to predict football match results which depends only on Facebook public comments 
+We propose a novel approach to predict football match results which depends only on Facebook public comments posted *before* the match starts 
 and does not require previous statistics that may include expensive access or require intensive feature engineering.
 
 ## Dataset
