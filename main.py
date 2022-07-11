@@ -183,7 +183,7 @@ def main(args):
                     away_win_prob = np.count_nonzero(away_pred == 2) / len(away_pred)
                     away_draw_prob = np.count_nonzero(away_pred == 1) / len(away_pred)
                     away_lose_prob = np.count_nonzero(away_pred == 0) / len(away_pred)
-                    assert((home_win_prob + home_draw_prob + home_lose_prob) == 1)
+                    assert((away_win_prob + away_draw_prob + away_lose_prob) == 1)
                 else:
                     home_win_prob = np.average(clf.predict(vectorized_home))
                     home_lose_prob = 1 - home_win_prob
