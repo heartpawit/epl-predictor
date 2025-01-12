@@ -4,7 +4,7 @@
 > 
 > CS372 Natural Language Processing with NLP, KAIST (Spring 2022)
 
-Check our [paper](#).
+Check our [paper](who_wins.pdf).
 
 ## Introduction
 
